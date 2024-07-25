@@ -1,39 +1,36 @@
 let words = [];
 
-const newWordButton = document.getElementById('new-word-button');
 const newWordFormContainer = document.getElementById('new-word-form-container');
-const newWordForm = document.getElementById('new-word-form');
 const wordsList = document.getElementById('words-list');
-const searchForm = document.getElementById('search-form');
 
-newWordButton.addEventListener('click', function() {
+function showNewWordForm() {
     newWordFormContainer.style.display = 'block';
-});
+}
 
-newWordForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+function addWord() {
     const word = document.getElementById('new-word').value.trim();
     const definition = document.getElementById('new-definition').value.trim();
     if (word && definition) {
         words.push({ word, definition });
         newWordFormContainer.style.display = 'none';
-        newWordForm.reset();
+        document.getElementById('new-word').value = "";
+        document.getElementById('new-definition').value = "";
         displayWords();
     }
-});
+}
 
-searchForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+function searchWord() {
     const searchWord = document.getElementById('search-input').value.trim();
     if (searchWord) {
         const wordInDictionary = words.some(entry => entry.word === searchWord);
-        alert(wordInDictionary 
-            ? `The word "${searchWord}" can be found in the dictionary.` 
-            : `The word "${searchWord}" is missing from the dictionary.`
-        );
+        if (wordInDictionary) {
+            alert(`The word "${searchWord}" can be found in the dictionary.`);
+        } else {
+            alert(`The word "${searchWord}" is missing from the dictionary.`);
+        }
         document.getElementById('search-input').value = "";
     }
-});
+}
 
 function displayWords() {
     wordsList.innerHTML = "";
